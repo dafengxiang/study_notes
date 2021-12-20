@@ -1,4 +1,4 @@
-# gitcommitlint
+# gitcommitlint配置方案
 
 * 安装依赖
 
