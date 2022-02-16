@@ -60,26 +60,30 @@ geometry.faces.push(new THREE.Faces3(x, y, z));                                 
 ###  材质
 
 ```js
-1. new THREE.MeshBasicMaterial(options); // 基本材质
-2. // options {} 可选。参数：
-3. //   visible：是否可见
-4. //     color：颜色
-5. // wireframe: 是否渲染线而非面
-6. //      side：THREE.FrontSide 正面，THREE.BackSide 反面，THREE.DoubleSide 双面
-7. //       map: 贴图
-8. new THREE.MeshLambertMaterial(options); // Lambert材质，适合光照
-9. //  ambient：反射能力
-10. // emissive：自发光颜色
-11. new THREE.MeshPhongMaterial();  // Phong材质，适合金属和镜面
-12. //  specular：光罩颜色
-13. // shininess：光斑大小（值越大，光斑越小）
-14. new THREE.MeshNormalMaterial(); // 方向材质
-15. /* 贴图 */
-16. var texture = THREE.ImageUtils.loadTexture(url, {}, function(){}); // 载入单个贴图（建议贴图的长宽为256的倍数）
-17. new THREE.MeshFaceMaterial() // 设置不同面的贴图，参数为单个贴图的数组
-18. texture.wrapS texture.wrapT = THREE.RepeatWrapping // 贴图的重复方式
-19. texture.repeat.set(x, y)     // 重复次数
-20. new THREE.texture(canvas)    // 将canvas作为贴图
+new THREE.MeshBasicMaterial(options); // 基本材质
+ // options {} 可选。参数：
+ // visible：是否可见
+ // color：颜色
+ // wireframe: 是否渲染线而非面
+ // side：THREE.FrontSide 正面，THREE.BackSide 反面，THREE.DoubleSide 双面
+ // map: 贴图
+
+new THREE.MeshLambertMaterial(options); // Lambert材质，适合光照
+ // ambient：反射能力
+ // emissive：自发光颜色
+
+new THREE.MeshPhongMaterial();  // Phong材质，适合金属和镜面
+ //  specular：光罩颜色
+ // shininess：光斑大小（值越大，光斑越小）
+
+new THREE.MeshNormalMaterial(); // 方向材质
+
+ /* 贴图 */
+var texture = THREE.ImageUtils.loadTexture(url, {}, function(){}); // 载入单个贴图（建议贴图的长宽为256的倍数）
+new THREE.MeshFaceMaterial() // 设置不同面的贴图，参数为单个贴图的数组
+texture.wrapS texture.wrapT = THREE.RepeatWrapping // 贴图的重复方式
+texture.repeat.set(x, y)     // 重复次数
+new THREE.texture(canvas)    // 将canvas作为贴图
 ```
 
 ### 将模型和贴图结合
