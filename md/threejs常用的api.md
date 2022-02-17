@@ -25,7 +25,7 @@ var renderer = new THREE.WebGLRenderer(options);
 // canvas：element <canvas></canvas>
 renderer.setSize(长, 宽);
 element.appendChild(renderer.domElement); // 插入节点
-renderer.setClearColor(color, opacity);   // 设置清除后的颜色 16进制
+renderer.setClearColor(color, opacity);   // 设置清除后的颜色 16进制，opacity透明度
 renderer.clear();                         // 清除面板
 renderer.render(scene, camera);           // 渲染
 ```
@@ -103,3 +103,12 @@ stats.domElement // 节点
 stats.begin()    // 开始
 stats.end()      // 结束
 ```
+
+### three.js 抗锯齿
+
+```js
+ let pixelRatio = window.devicePixelRatio < 1.5 ? 1.5 : window.devicePixelRatio;
+	renderer.setPixelRatio(pixelRatio);
+	renderer.antialias = true;
+```
+
