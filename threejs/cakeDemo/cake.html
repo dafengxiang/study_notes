@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-16 15:05:38
- * @LastEditTime: 2022-02-18 13:25:03
+ * @LastEditTime: 2022-02-18 13:35:59
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -38,7 +38,7 @@
     <script src="https://static.iqiyi.com/lequ/20220120/three.min.js"></script>
     <script src="https://static.iqiyi.com/lequ/20220215/OrbitControls.js"></script>
     <script type="module">
-        import newCake from './js/Cake.js'
+        import initCake from './js/initCake.js'
 
         (async function init() {
             const scene = new THREE.Scene()
@@ -46,7 +46,7 @@
             const initSize = 1.7
 
             // 初始第一块蛋糕
-            const cake1 = await newCake({ size: initSize })
+            const cake1 = await initCake({ size: initSize })
             scene.add(cake1)
 
             //点光源
@@ -102,8 +102,8 @@
                 if (0.5 < rotation / Math.PI && rotation / Math.PI < 1.5) size = 1.5 - rotation / Math.PI
                 if (1.5 < rotation / Math.PI && rotation / Math.PI < 2) size = rotation / Math.PI
 
-                const cake2 = await newCake({ size, rotate: rotation })
-                const cake3 = await newCake({ size: initSize - size, rotate: rotation + size * Math.PI })
+                const cake2 = await initCake({ size, rotate: rotation })
+                const cake3 = await initCake({ size: initSize - size, rotate: rotation + size * Math.PI })
                 scene.remove(cake1)
                 scene.add(cake2).add(cake3)
                 let timer = setInterval(() => {
@@ -113,7 +113,6 @@
                 }, 50)
             }
         })()
-
     </script>
 </body>
 

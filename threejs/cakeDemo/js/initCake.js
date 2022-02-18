@@ -2,12 +2,11 @@
  * @Description: 初始化蛋糕
  * @Author: wangfengxiang
  * @Date: 2022-02-17 15:53:49
- * @LastEditTime: 2022-02-18 13:22:45
+ * @LastEditTime: 2022-02-18 13:35:20
  * @LastEditors: wangfengxiang
  */
 import loadSkin from './loadSkin.js'
 export default async function ({ rotate, size }) {
-
     const cakeGroup = new THREE.Group()
     // 蛋糕主体
     const cakeBody = new THREE.CylinderGeometry(50, 50, 40, 100, 1, false, 0, Math.PI * size);
