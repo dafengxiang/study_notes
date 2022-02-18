@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-16 15:05:38
- * @LastEditTime: 2022-02-18 13:35:59
+ * @LastEditTime: 2022-02-18 18:30:37
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -35,6 +35,7 @@
 <body>
     <div id="container"></div>
     <button id="btn">切蛋糕</button>
+    <script src="https://static.iqiyi.com/lequ/20220218/dat.gui.js"></script>
     <script src="https://static.iqiyi.com/lequ/20220120/three.min.js"></script>
     <script src="https://static.iqiyi.com/lequ/20220215/OrbitControls.js"></script>
     <script type="module">
@@ -94,7 +95,10 @@
                 renderer.render(scene, camera);
             }
             render();
-
+            let control = new function () {
+                this.move = 0.5
+            }
+            var goi = new dat.GUI().add(control, 'move', 0, 10)
             btn.onclick = async () => {
                 let rotation = cake1.rotation.y
                 let size = 0
@@ -107,7 +111,7 @@
                 scene.remove(cake1)
                 scene.add(cake2).add(cake3)
                 let timer = setInterval(() => {
-                    cake2.position.y += 5;
+                    cake2.position.y += control.move;
                     if (cake2.position.y > 80) clearInterval(timer)
                     renderer.render(scene, camera);
                 }, 50)
