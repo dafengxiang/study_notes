@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-16 15:05:38
- * @LastEditTime: 2022-02-17 19:17:46
+ * @LastEditTime: 2022-02-18 13:25:03
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -20,15 +20,14 @@
         }
 
         #container {
-            margin: 100px auto;
+            margin: 150px auto 0;
             width: 300px;
             height: 300px;
-            /* border: 1px solid #f00; */
         }
 
         #btn {
             display: block;
-            margin: 20px auto;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -39,88 +38,82 @@
     <script src="https://static.iqiyi.com/lequ/20220120/three.min.js"></script>
     <script src="https://static.iqiyi.com/lequ/20220215/OrbitControls.js"></script>
     <script type="module">
-        import Cake from './js/Cake.js'
-        const scene = new THREE.Scene()
+        import newCake from './js/Cake.js'
 
-        const initSize = 1.7
+        (async function init() {
+            const scene = new THREE.Scene()
 
-        // 初始第一块蛋糕
-        const cake1 = new Cake({ size: initSize })
-        scene.add(cake1)
+            const initSize = 1.7
 
-        //点光源
-        var point = new THREE.PointLight(0xffffff);
-        point.position.set(0, 200, 200); //点光源位置
-        scene.add(point); //点光源添加到场景中
+            // 初始第一块蛋糕
+            const cake1 = await newCake({ size: initSize })
+            scene.add(cake1)
 
-        //环境光
-        var ambient = new THREE.AmbientLight(0x444444);
-        scene.add(ambient);
+            //点光源
+            var point = new THREE.PointLight(0xffffff);
+            point.position.set(0, 200, 200); //点光源位置
+            scene.add(point); //点光源添加到场景中
 
-        /**
-         * 相机设置
-         */
-        var width = 300; //窗口宽度
-        var height = 300; //窗口高度
-        var k = width / height; //窗口宽高比
-        //创建相机对象
-        var camera = new THREE.PerspectiveCamera(60, k);
-        camera.position.set(0, 100, 250); //设置相机位置
-        camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
+            //环境光
+            var ambient = new THREE.AmbientLight(0x444444);
+            scene.add(ambient);
 
-        // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
-        // var axisHelper = new THREE.AxisHelper(250)
-        // scene.add(axisHelper)
+            /**
+             * 相机设置
+             */
+            var width = 300; //窗口宽度
+            var height = 300; //窗口高度
+            var k = width / height; //窗口宽高比
+            //创建相机对象
+            var camera = new THREE.PerspectiveCamera(60, k);
+            camera.position.set(0, 100, 250); //设置相机位置
+            camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
 
-        /**
-         * 创建渲染器对象
-         */
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(width, height);//设置渲染区域尺寸
-        renderer.setClearColor(0xb9d3ff, 0); //设置背景颜色
+            // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
+            // var axisHelper = new THREE.AxisHelper(250)
+            // scene.add(axisHelper)
 
-        let pixelRatio = window.devicePixelRatio < 1.5 ? 1.5 : window.devicePixelRatio;
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.antialias = true;
+            /**
+             * 创建渲染器对象
+             */
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(width, height);//设置渲染区域尺寸
+            renderer.setClearColor(0xb9d3ff, 0); //设置背景颜色
 
-        container.appendChild(renderer.domElement); //body元素中插入canvas对象
+            let pixelRatio = window.devicePixelRatio < 1.5 ? 1.5 : window.devicePixelRatio;
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.antialias = true;
 
-        var controls = new THREE.OrbitControls(camera, renderer.domElement) //创建控件对象
+            container.appendChild(renderer.domElement); //body元素中插入canvas对象
 
-        // function render() {
-        //     requestAnimationFrame(render);
-        //     cakeAll.rotation.y += 0.008;
-        //     renderer.render(scene, camera);
-        // }
-        // render();
-        let timer = setInterval(() => {
-            cake1.rotation.y += 0.05;
-            if (cake1.rotation.y >= 6.28) cake1.rotation.y = 0
-            renderer.render(scene, camera);
-        }, 50)
+            var controls = new THREE.OrbitControls(camera, renderer.domElement) //创建控件对象
 
-        btn.onclick = () => {
-            if (timer) {
+            function render() {
+                requestAnimationFrame(render);
+                cake1.rotation.y += 0.008;
+                renderer.render(scene, camera);
+            }
+            render();
+
+            btn.onclick = async () => {
                 let rotation = cake1.rotation.y
-                console.log('rotation: ', rotation);
-                clearInterval(timer)
                 let size = 0
                 if (rotation / Math.PI < 0.5) size = 0.5 - rotation / Math.PI
                 if (0.5 < rotation / Math.PI && rotation / Math.PI < 1.5) size = 1.5 - rotation / Math.PI
                 if (1.5 < rotation / Math.PI && rotation / Math.PI < 2) size = rotation / Math.PI
 
-                const cake2 = new Cake({ size, rotate: rotation })
-                const cake3 = new Cake({ size: initSize - size, rotate: rotation + size * Math.PI })
+                const cake2 = await newCake({ size, rotate: rotation })
+                const cake3 = await newCake({ size: initSize - size, rotate: rotation + size * Math.PI })
                 scene.remove(cake1)
                 scene.add(cake2).add(cake3)
-                timer = setInterval(() => {
-                    cake2.position.y += 1.5;
-                    console.log('cake2.position.y: ', cake2.position.y);
+                let timer = setInterval(() => {
+                    cake2.position.y += 5;
+                    if (cake2.position.y > 80) clearInterval(timer)
                     renderer.render(scene, camera);
-                    
                 }, 50)
             }
-        }
+        })()
+
     </script>
 </body>
 
