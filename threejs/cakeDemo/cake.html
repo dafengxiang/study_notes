@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-16 15:05:38
- * @LastEditTime: 2022-02-18 18:30:37
+ * @LastEditTime: 2022-02-21 14:05:27
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -40,8 +40,21 @@
     <script src="https://static.iqiyi.com/lequ/20220215/OrbitControls.js"></script>
     <script type="module">
         import initCake from './js/initCake.js'
+        import initDatGUI from './js/initDatGUI.js'
 
         (async function init() {
+
+            const { controls: control } = new initDatGUI({
+                move: {
+                    curVal: 5,
+                    maxVal: 10,
+                },
+                speed: {
+                    curVal: 0.008,
+                    maxVal: 0.1,
+                }
+            })
+
             const scene = new THREE.Scene()
 
             const initSize = 1.7
@@ -91,14 +104,11 @@
 
             function render() {
                 requestAnimationFrame(render);
-                cake1.rotation.y += 0.008;
+                cake1.rotation.y += control.speed;
                 renderer.render(scene, camera);
             }
             render();
-            let control = new function () {
-                this.move = 0.5
-            }
-            var goi = new dat.GUI().add(control, 'move', 0, 10)
+
             btn.onclick = async () => {
                 let rotation = cake1.rotation.y
                 let size = 0
