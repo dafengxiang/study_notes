@@ -2,7 +2,7 @@
  * @Description: 初始场景
  * @Author: wangfengxiang
  * @Date: 2022-02-24 11:10:48
- * @LastEditTime: 2022-02-24 18:16:04
+ * @LastEditTime: 2022-02-24 18:20:09
  * @LastEditors: wangfengxiang
  */
 
@@ -17,7 +17,7 @@ export default function () {
     scene.add(ambient);
 
     // 相机设置
-    var width = 300; //窗口宽度
+    var width = window.innerWidth; //窗口宽度
     var height = 500; //窗口高度
     var k = width / height; //窗口宽高比
     // 创建相机对象
