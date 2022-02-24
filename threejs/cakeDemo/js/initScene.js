@@ -2,7 +2,7 @@
  * @Description: 初始场景
  * @Author: wangfengxiang
  * @Date: 2022-02-24 11:10:48
- * @LastEditTime: 2022-02-24 15:46:42
+ * @LastEditTime: 2022-02-24 18:16:04
  * @LastEditors: wangfengxiang
  */
 
@@ -18,16 +18,16 @@ export default function () {
 
     // 相机设置
     var width = 300; //窗口宽度
-    var height = 300; //窗口高度
+    var height = 500; //窗口高度
     var k = width / height; //窗口宽高比
     // 创建相机对象
     var camera = new THREE.PerspectiveCamera(60, k);
-    camera.position.set(0, 100, 250); //设置相机位置
+    camera.position.set(0, 100, 200); //设置相机位置
     camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
 
     // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
-    var axisHelper = new THREE.AxisHelper(250)
-    scene.add(axisHelper)
+    // var axisHelper = new THREE.AxisHelper(250)
+    // scene.add(axisHelper)
 
     // 创建渲染器对象
     var renderer = new THREE.WebGLRenderer();
