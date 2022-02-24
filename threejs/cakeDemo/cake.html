@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-16 15:05:38
- * @LastEditTime: 2022-02-24 18:13:41
+ * @LastEditTime: 2022-02-24 18:18:02
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -75,11 +75,12 @@
 
             // 初始环境
             const { scene, camera, renderer, controls, point } = initScene()
-            scene.position.y=-50
+            scene.position.y = -50
 
             // 加载纹理
             const outSkin = new THREE.MeshLambertMaterial({
-                map: await loadSkin('/cakeDemo/images/aside_skin.jpg')
+                // map: await loadSkin('/cakeDemo/images/aside_skin.jpg')
+                color: '0#999999'
             })
             const innerSkin = new THREE.MeshLambertMaterial({
                 map: await loadSkin('/cakeDemo/images/inner_skin.jpeg')
