@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-16 15:05:38
- * @LastEditTime: 2022-02-23 19:44:17
+ * @LastEditTime: 2022-02-24 15:45:16
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -44,13 +44,15 @@
         import Cake from './js/Cake.js'
         import loadSkin from './js/loadSkin.js'
         import initDatGUI from './js/initDatGUI.js'
+        import initScene from './js/initScene.js'
+        import intervalAnimationFrame from './js/intervalAnimationFrame.js'
 
         (async function init() {
 
             // 初始化数据控制器
             const { controls: control } = new initDatGUI({
                 move: {
-                    curVal: 5,
+                    curVal: 2,
                     maxVal: 10,
                 },
                 speed: {
@@ -71,7 +73,10 @@
                 }
             })
 
-            // 纹理
+            // 初始环境
+            const { scene, camera, renderer, controls, point } = initScene()
+
+            // 加载纹理
             const outSkin = new THREE.MeshLambertMaterial({
                 map: await loadSkin('/cakeDemo/images/aside_skin.jpg')
             })
@@ -79,54 +84,16 @@
                 map: await loadSkin('/cakeDemo/images/inner_skin.jpeg')
             })
 
-            const scene = new THREE.Scene()
-
-
+            // 初始先转组
+            const rotateGroup = new THREE.Group()
+            scene.add(rotateGroup)
 
             // 初始第一块蛋糕
             const initSize = 1.7
             let cake = new Cake({ size: initSize, outSkin, innerSkin })
-            scene.add(cake)
+            rotateGroup.add(cake)
 
-            //点光源
-            var point = new THREE.PointLight(0xffffff);
-            scene.add(point); //点光源添加到场景中
-
-            //环境光
-            var ambient = new THREE.AmbientLight(0x444444);
-            scene.add(ambient);
-
-            /**
-             * 相机设置
-             */
-            var width = 300; //窗口宽度
-            var height = 300; //窗口高度
-            var k = width / height; //窗口宽高比
-            //创建相机对象
-            var camera = new THREE.PerspectiveCamera(60, k);
-            camera.position.set(0, 100, 250); //设置相机位置
-            camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
-
-            // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
-            var axisHelper = new THREE.AxisHelper(250)
-            scene.add(axisHelper)
-
-            /**
-             * 创建渲染器对象
-             */
-            var renderer = new THREE.WebGLRenderer();
-            renderer.setSize(width, height);//设置渲染区域尺寸
-            renderer.setClearColor(0xb9d3ff, 0); //设置背景颜色
-
-            let pixelRatio = window.devicePixelRatio < 1.5 ? 1.5 : window.devicePixelRatio;
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.antialias = true;
-
-            container.appendChild(renderer.domElement); //body元素中插入canvas对象
-
-            var controls = new THREE.OrbitControls(camera, renderer.domElement) //创建控件对象
-
-            // 初始蜡烛
+            // 初始九周年蜡烛
             const colladaLoader = new THREE.ColladaLoader();
             let fire = new THREE.Group()
             colladaLoader.load('./texture/nine1.dae', (res) => {
@@ -134,37 +101,39 @@
                 fire.add(res.scene.children[0])
                 fire.rotation.set(-Math.PI * 0.5, -Math.PI * 0.1, 0)
                 fire.position.set(-20, 70, 0)
-                cake.add(fire)
+                rotateGroup.add(fire)
             })
 
-            function render() {
-                requestAnimationFrame(render);
-
+            // 旋转
+            let intervalRender = new intervalAnimationFrame(() => {
                 point.position.set(control.x, control.y, control.z); //点光源位置
-                cake.rotation.y += control.speed;
+                rotateGroup.rotation.y += control.speed;
                 renderer.render(scene, camera);
-            }
-            render();
+            })
 
 
             btn.onclick = async () => {
-                let rotation = cake.rotation.y
+                // 旋转停止，删除旧蛋糕
+                intervalRender.stop()
+                rotateGroup.remove(cake)
+
+                // 初始两块新蛋糕
+                let rotation = rotateGroup.rotation.y
                 let size = 0
                 if (rotation / Math.PI < 0.5) size = 0.5 - rotation / Math.PI
                 if (0.5 < rotation / Math.PI && rotation / Math.PI < 1.5) size = 1.5 - rotation / Math.PI
                 if (1.5 < rotation / Math.PI && rotation / Math.PI < 2) size = rotation / Math.PI
-                scene.remove(cake)
 
                 const sliceCake = new Cake({ size, rotate: rotation, outSkin, innerSkin })
                 const restCake = new Cake({ size: initSize - size, rotate: rotation + size * Math.PI, outSkin, innerSkin })
-                restCake.add(fire)
+
                 scene.add(restCake).add(sliceCake)
 
-                let timer = setInterval(() => {
+                intervalRender = new intervalAnimationFrame(() => {
                     sliceCake.position.y += control.move;
-                    if (sliceCake.position.y > 180) clearInterval(timer)
+                    if (sliceCake.position.y > 100) intervalRender.stop()
                     renderer.render(scene, camera);
-                }, 50)
+                })
             }
         })()
     </script>
