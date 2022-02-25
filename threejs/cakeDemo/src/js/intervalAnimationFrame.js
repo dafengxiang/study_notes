@@ -1,8 +1,8 @@
 /*
- * @Description: 
+ * @Description: 定时执行器
  * @Author: wangfengxiang
  * @Date: 2022-02-24 11:43:06
- * @LastEditTime: 2022-02-25 13:55:10
+ * @LastEditTime: 2022-02-25 14:00:31
  * @LastEditors: wangfengxiang
  */
 export default class intervalAnimationFrame {

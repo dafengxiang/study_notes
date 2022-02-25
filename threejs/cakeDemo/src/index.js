@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-02-25 13:56:47
+ * @LastEditTime: 2022-02-25 13:58:46
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -12,12 +12,10 @@ import initScene from './js/initScene.js'
 import intervalAnimationFrame from './js/intervalAnimationFrame.js'
 import innerSkinImg from './images/inner_skin.jpeg'
 import nineMesh from './texture/nine1.dae'
-// console.log('innerSkinImg: ', innerSkinImg);
 
 (async function init() {
-
     // 初始化数据控制器
-    const { controls: control } = new initDatGUI({
+    const { controls } = new initDatGUI({
         move: {
             curVal: 2,
             maxVal: 10,
@@ -41,7 +39,7 @@ import nineMesh from './texture/nine1.dae'
     })
 
     // 初始环境
-    const { scene, camera, renderer, controls, point } = initScene()
+    const { scene, camera, renderer, point } = initScene()
     scene.position.y = -50
 
     // 加载纹理
@@ -75,13 +73,13 @@ import nineMesh from './texture/nine1.dae'
 
     // 初始化定时渲染对象
     const intervalRenderInstance = new intervalAnimationFrame(() => {
-        point.position.set(control.x, control.y, control.z); //点光源位置
+        point.position.set(controls.x, controls.y, controls.z); //点光源位置
         renderer.render(scene, camera);
     })
 
     // 旋转
     const rotateRender = intervalRenderInstance.add(() => {
-        rotateGroup.rotation.y += control.speed;
+        rotateGroup.rotation.y += controls.speed;
         if (rotateGroup.rotation.y / Math.PI > 2) rotateGroup.rotation.y = 0
     })
 
@@ -103,7 +101,7 @@ import nineMesh from './texture/nine1.dae'
         scene.add(restCake).add(sliceCake)
 
         const raceRender = intervalRenderInstance.add(() => {
-            sliceCake.position.y += control.move;
+            sliceCake.position.y += controls.move;
             if (sliceCake.position.y > 130) intervalRenderInstance.remove(raceRender)
         })
     }

@@ -2,7 +2,7 @@
  * @Description: 初始化DatGUI
  * @Author: wangfengxiang
  * @Date: 2022-02-21 13:39:28
- * @LastEditTime: 2022-02-21 14:06:22
+ * @LastEditTime: 2022-02-25 13:59:35
  * @LastEditors: wangfengxiang
  */
 
@@ -25,6 +25,5 @@ export default class initDatGUI extends dat.GUI {
             const { minVal = 0, maxVal = 5 } = dataObj[key]
             this.GUI.add(this.controls, key, minVal, maxVal)
         }
-
     }
 }
