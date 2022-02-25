@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-02-25 11:47:33
+ * @LastEditTime: 2022-02-25 13:56:47
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -73,21 +73,21 @@ import nineMesh from './texture/nine1.dae'
         rotateGroup.add(fire)
     })
 
-    // 旋转
-    let intervalRender = new intervalAnimationFrame(() => {
-        rotateGroup.rotation.y += control.speed;
-        if (rotateGroup.rotation.y / Math.PI > 2) rotateGroup.rotation.y = 0
-    })
-
-    new intervalAnimationFrame(() => {
+    // 初始化定时渲染对象
+    const intervalRenderInstance = new intervalAnimationFrame(() => {
         point.position.set(control.x, control.y, control.z); //点光源位置
         renderer.render(scene, camera);
     })
 
+    // 旋转
+    const rotateRender = intervalRenderInstance.add(() => {
+        rotateGroup.rotation.y += control.speed;
+        if (rotateGroup.rotation.y / Math.PI > 2) rotateGroup.rotation.y = 0
+    })
 
     btn.onclick = async () => {
         // 旋转停止，删除旧蛋糕
-        intervalRender.stop()
+        intervalRenderInstance.remove(rotateRender)
         rotateGroup.remove(cake)
 
         // 初始两块新蛋糕
@@ -102,9 +102,9 @@ import nineMesh from './texture/nine1.dae'
 
         scene.add(restCake).add(sliceCake)
 
-        intervalRender = new intervalAnimationFrame(() => {
+        const raceRender = intervalRenderInstance.add(() => {
             sliceCake.position.y += control.move;
-            if (sliceCake.position.y > 130) intervalRender.stop()
+            if (sliceCake.position.y > 130) intervalRenderInstance.remove(raceRender)
         })
     }
 })()
