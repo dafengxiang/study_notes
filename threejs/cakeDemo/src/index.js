@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-02-24 18:30:29
+ * @LastEditTime: 2022-02-25 10:08:31
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -10,6 +10,9 @@ import loadSkin from './js/loadSkin.js'
 import initDatGUI from './js/initDatGUI.js'
 import initScene from './js/initScene.js'
 import intervalAnimationFrame from './js/intervalAnimationFrame.js'
+import innerSkinImg from './images/inner_skin.jpeg'
+import nineMesh from './texture/nine1.dae'
+// console.log('innerSkinImg: ', innerSkinImg);
 
 (async function init() {
 
@@ -47,7 +50,7 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
         color: '0#999999'
     })
     const innerSkin = new THREE.MeshLambertMaterial({
-        map: await loadSkin('./images/inner_skin.jpeg')
+        map: await loadSkin(innerSkinImg)
     })
 
     // 初始先转组
@@ -62,7 +65,7 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
     // 初始九周年蜡烛
     const colladaLoader = new THREE.ColladaLoader();
     let fire = new THREE.Group()
-    colladaLoader.load('./texture/nine1.dae', (res) => {
+    colladaLoader.load(nineMesh, (res) => {
         res.scene.children[0].scale.set(1, 1, 1)
         fire.add(res.scene.children[0])
         fire.rotation.set(-Math.PI * 0.5, -Math.PI * 0.1, 0)
