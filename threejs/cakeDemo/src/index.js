@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-02-25 10:08:31
+ * @LastEditTime: 2022-02-25 11:47:33
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -75,10 +75,12 @@ import nineMesh from './texture/nine1.dae'
 
     // 旋转
     let intervalRender = new intervalAnimationFrame(() => {
-        point.position.set(control.x, control.y, control.z); //点光源位置
         rotateGroup.rotation.y += control.speed;
         if (rotateGroup.rotation.y / Math.PI > 2) rotateGroup.rotation.y = 0
-        // console.log('rotateGroup.rotation.y: ', rotateGroup.rotation.y);
+    })
+
+    new intervalAnimationFrame(() => {
+        point.position.set(control.x, control.y, control.z); //点光源位置
         renderer.render(scene, camera);
     })
 
@@ -103,10 +105,6 @@ import nineMesh from './texture/nine1.dae'
         intervalRender = new intervalAnimationFrame(() => {
             sliceCake.position.y += control.move;
             if (sliceCake.position.y > 130) intervalRender.stop()
-            renderer.render(scene, camera);
-        })
-        new intervalAnimationFrame(() => {
-            renderer.render(scene, camera);
         })
     }
 })()
