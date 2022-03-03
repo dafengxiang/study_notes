@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-02-25 13:58:46
+ * @LastEditTime: 2022-03-03 09:54:02
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -11,6 +11,7 @@ import initDatGUI from './js/initDatGUI.js'
 import initScene from './js/initScene.js'
 import intervalAnimationFrame from './js/intervalAnimationFrame.js'
 import innerSkinImg from './images/inner_skin.jpeg'
+import daoSkinImg from './images/dao_skin.png'
 import nineMesh from './texture/nine1.dae'
 
 (async function init() {
@@ -50,6 +51,9 @@ import nineMesh from './texture/nine1.dae'
     const innerSkin = new THREE.MeshLambertMaterial({
         map: await loadSkin(innerSkinImg)
     })
+    const daoSkin = new THREE.MeshLambertMaterial({
+        map: await loadSkin(daoSkinImg)
+    })
 
     // 初始先转组
     const rotateGroup = new THREE.Group()
@@ -83,26 +87,42 @@ import nineMesh from './texture/nine1.dae'
         if (rotateGroup.rotation.y / Math.PI > 2) rotateGroup.rotation.y = 0
     })
 
+    let isCut = false
     btn.onclick = async () => {
-        // 旋转停止，删除旧蛋糕
+        if (isCut) return alert('别贪心，只能切一次~')
+        isCut = true
+        // 旋转停止
         intervalRenderInstance.remove(rotateRender)
-        rotateGroup.remove(cake)
 
-        // 初始两块新蛋糕
-        let rotation = rotateGroup.rotation.y / Math.PI
-        let size = 0
-        if (rotation < 0.5) size = 0.5 - rotation
-        if (0.5 < rotation && rotation < 1.5) size = 1.5 - rotation
-        if (1.5 < rotation && rotation < 2) size = 2.5 - rotation
+        // 刀切
+        const dao = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), daoSkin)
+        dao.material.transparent = true;
+        dao.position.set(-50, 20, 0)
+        scene.add(dao)
+        const cutRender = intervalRenderInstance.add(() => {
+            dao.position.x += controls.move;
+            if (dao.position.x > 100) {
+                intervalRenderInstance.remove(cutRender)
+                scene.remove(dao)
+                rotateGroup.remove(cake)
 
-        const sliceCake = new Cake({ size, rotate: rotation * Math.PI, outSkin, innerSkin })
-        const restCake = new Cake({ size: initSize - size, rotate: rotation * Math.PI + size * Math.PI, outSkin, innerSkin })
+                // 初始两块新蛋糕
+                let rotation = rotateGroup.rotation.y / Math.PI
+                let size = 0
+                if (rotation < 0.5) size = 0.5 - rotation
+                if (0.5 < rotation && rotation < 1.5) size = 1.5 - rotation
+                if (1.5 < rotation && rotation < 2) size = 2.5 - rotation
 
-        scene.add(restCake).add(sliceCake)
+                const sliceCake = new Cake({ size, rotate: rotation * Math.PI, outSkin, innerSkin })
+                const restCake = new Cake({ size: initSize - size, rotate: rotation * Math.PI + size * Math.PI, outSkin, innerSkin })
 
-        const raceRender = intervalRenderInstance.add(() => {
-            sliceCake.position.y += controls.move;
-            if (sliceCake.position.y > 130) intervalRenderInstance.remove(raceRender)
+                scene.add(restCake).add(sliceCake)
+
+                const raceRender = intervalRenderInstance.add(() => {
+                    sliceCake.position.y += controls.move;
+                    if (sliceCake.position.y > 130) intervalRenderInstance.remove(raceRender)
+                })
+            }
         })
     }
 })()
