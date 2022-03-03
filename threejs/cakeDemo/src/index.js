@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-03-03 09:54:02
+ * @LastEditTime: 2022-03-03 10:57:37
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -16,7 +16,7 @@ import nineMesh from './texture/nine1.dae'
 
 (async function init() {
     // 初始化数据控制器
-    const { controls } = new initDatGUI({
+    const dg = new initDatGUI({
         move: {
             curVal: 2,
             maxVal: 10,
@@ -38,7 +38,8 @@ import nineMesh from './texture/nine1.dae'
             maxVal: 1000,
         }
     })
-
+    dg.close()
+    let controls = dg.controls
     // 初始环境
     const { scene, camera, renderer, point } = initScene()
     scene.position.y = -50
