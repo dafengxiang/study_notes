@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-03-03 10:57:37
+ * @LastEditTime: 2022-03-11 19:14:03
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -13,6 +13,7 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
 import innerSkinImg from './images/inner_skin.jpeg'
 import daoSkinImg from './images/dao_skin.png'
 import nineMesh from './texture/nine1.dae'
+import RumbaDancingMesh from './texture/RumbaDancing.dae'
 
 (async function init() {
     // 初始化数据控制器
@@ -63,7 +64,7 @@ import nineMesh from './texture/nine1.dae'
     // 初始第一块蛋糕
     const initSize = 1.7
     let cake = new Cake({ size: initSize, outSkin, innerSkin })
-    rotateGroup.add(cake)
+    // rotateGroup.add(cake)
 
     // 初始九周年蜡烛
     const colladaLoader = new THREE.ColladaLoader();
@@ -73,11 +74,30 @@ import nineMesh from './texture/nine1.dae'
         fire.add(res.scene.children[0])
         fire.rotation.set(-Math.PI * 0.5, -Math.PI * 0.1, 0)
         fire.position.set(-20, 70, 0)
-        rotateGroup.add(fire)
+        // rotateGroup.add(fire)
+    })
+    let mixer
+    // 初始舞者
+    colladaLoader.load(RumbaDancingMesh, ({ scene: dancer }) => {
+        console.log('dancer: ', dancer);
+        mixer = new THREE.AnimationMixer(dancer)
+        console.log('mixer: ', mixer);
+        mixer.clipAction(dancer.animations[0]).setDuration(1).play()
+   
+        dancer.scale.set(1, 1, 1)
+        dancer.position.set(0, -50, 0)
+        scene.add(dancer)
+
+        // res.scene.children[0].scale.set(1, 1, 1)
+        // fire.add(res.scene.children[0])
+        // fire.rotation.set(-Math.PI * 0.5, -Math.PI * 0.1, 0)
+        // fire.position.set(-20, 70, 0)
+        // rotateGroup.add(fire)
     })
 
     // 初始化定时渲染对象
     const intervalRenderInstance = new intervalAnimationFrame(() => {
+        mixer &&  mixer.update(1)
         point.position.set(controls.x, controls.y, controls.z); //点光源位置
         renderer.render(scene, camera);
     })
