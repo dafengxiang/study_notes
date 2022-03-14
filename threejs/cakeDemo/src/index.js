@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-03-11 19:23:19
+ * @LastEditTime: 2022-03-14 14:30:37
  * @LastEditors: wangfengxiang
  */
 import Cake from './js/Cake.js'
@@ -64,7 +64,7 @@ import RumbaDancingMesh from './texture/RumbaDancing.dae'
     // 初始第一块蛋糕
     const initSize = 1.7
     let cake = new Cake({ size: initSize, outSkin, innerSkin })
-    // rotateGroup.add(cake)
+    rotateGroup.add(cake)
 
     // 初始九周年蜡烛
     const colladaLoader = new THREE.ColladaLoader();
@@ -74,22 +74,24 @@ import RumbaDancingMesh from './texture/RumbaDancing.dae'
         fire.add(res.scene.children[0])
         fire.rotation.set(-Math.PI * 0.5, -Math.PI * 0.1, 0)
         fire.position.set(-20, 70, 0)
-        // rotateGroup.add(fire)
+        rotateGroup.add(fire)
     })
     // 初始舞者
+    let mixer = null,
+        clock = new THREE.Clock()
     colladaLoader.load(RumbaDancingMesh, ({ scene: dancer }) => {
-        console.log('dancer: ', dancer);
-        const mixer = new THREE.AnimationMixer(dancer)
-        console.log('mixer: ', mixer);
-        mixer.clipAction(dancer.animations[0]).setDuration(1).play()
-
-        dancer.scale.set(1, 1, 1)
-        dancer.position.set(0, -50, 0)
         scene.add(dancer)
+        dancer.scale.set(1, 1, 1)
+        dancer.position.set(0, -20, -150)
+        mixer = new THREE.AnimationMixer(dancer)
+        const clipAction = mixer.clipAction(dancer.animations[0]).play()
+        clipAction.getClip()
     })
 
     // 初始化定时渲染对象
     const intervalRenderInstance = new intervalAnimationFrame(() => {
+        const delta = clock.getDelta()
+        mixer && mixer.update(delta)
         point.position.set(controls.x, controls.y, controls.z); //点光源位置
         renderer.render(scene, camera);
     })
