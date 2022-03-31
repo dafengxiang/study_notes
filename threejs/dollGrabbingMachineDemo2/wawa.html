@@ -1,0 +1,62 @@
+<!--
+ * @Description: 
+ * @Author: wangfengxiang
+ * @Date: 2022-03-30 15:50:20
+ * @LastEditTime: 2022-03-31 11:46:11
+ * @LastEditors: wangfengxiang
+-->
+<!DOCTYPE html>
+
+<html>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .btns {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+
+    }
+
+    .btns .btn {
+        width: 100px;
+        height: 100px;
+        font-size: 70px;
+
+    }
+</style>
+
+<head>
+    <title>Example 11.01 - Basic Textures</title>
+    <script type="text/javascript" charset="UTF-8" src="./js/three.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="./js/TrackballControls.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="./js/physi.js"></script>
+    <script type="text/javascript" src="./js/Stats.js"></script>
+    <script type="text/javascript" src="./js/dat.gui.js"></script>
+    <script src="https://static.iqiyi.com/lequ/20220223/ColladaLoader-137.min.js"></script>
+
+    <script type="text/javascript" src="./js/util.js"></script>
+    <script type="text/javascript" src="./js/initTable.js"></script>
+    <script type="text/javascript" src="./js/initBall.js"></script>
+    <script type="text/javascript" src="./js/initClaw.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
+    <link rel="stylesheet" href="./css/default.css">
+</head>
+
+<body>
+    <div id="webgl-output"></div>
+    <div class="btns">
+        <button class="btn" onclick="changePosition(0)">↑</button>
+        <button class="btn" onclick="changePosition(1)">↓</button>
+        <button class="btn" onclick="changePosition(2)">←</button>
+        <button class="btn" onclick="changePosition(3)">→</button>
+    </div>
+    <script type="module"> (function () { init() })(); </script>
+</body>
+
+</html>
