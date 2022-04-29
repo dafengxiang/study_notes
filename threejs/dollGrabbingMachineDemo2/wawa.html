@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-03-30 15:50:20
- * @LastEditTime: 2022-03-31 11:46:11
+ * @LastEditTime: 2022-04-14 11:37:32
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -32,7 +32,7 @@
 </style>
 
 <head>
-    <title>Example 11.01 - Basic Textures</title>
+    <title>抓娃娃机DEMO</title>
     <script type="text/javascript" charset="UTF-8" src="./js/three.js"></script>
     <script type="text/javascript" charset="UTF-8" src="./js/TrackballControls.js"></script>
     <script type="text/javascript" charset="UTF-8" src="./js/physi.js"></script>
@@ -51,10 +51,14 @@
 <body>
     <div id="webgl-output"></div>
     <div class="btns">
+        <button class="btn" onclick="changePosition(6)">+</button>
+        <button class="btn" onclick="changePosition(7)">-</button>
         <button class="btn" onclick="changePosition(0)">↑</button>
         <button class="btn" onclick="changePosition(1)">↓</button>
         <button class="btn" onclick="changePosition(2)">←</button>
-        <button class="btn" onclick="changePosition(3)">→</button>
+        <button class="btn" onclick="changePosition(3)">→</button><br>
+        <button class="btn" onclick="changePosition(4)">o</button>
+        <button class="btn" onclick="changePosition(5)">c</button>
     </div>
     <script type="module"> (function () { init() })(); </script>
 </body>
