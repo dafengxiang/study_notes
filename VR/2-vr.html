@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VR demo</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #view {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      /* 景深 */
+      perspective: 600px;
+    }
+    #wrap,
+    #tz,
+    #box3d{
+      position: absolute;
+      left:50%;
+      top:50%;
+      /* 3D渲染 */
+      transform-style: preserve-3d;
+    }
+    #box3d img{
+      position: absolute;
+      width: 1024px;height: 1024px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="view">
+    <div id="wrap">
+      <div id="tz">
+        <div id="box3d">
+          <img src="./img/neg-x.png">
+          <img src="./img/pos-z.png">
+          <img src="./img/pos-x.png">
+          <img src="./img/neg-z.png">
+          <img src="./img/pos-y.png">
+          <img src="./img/neg-y.png">
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    {
+      window.addEventListener('deviceorientation', (e) => {
+        box.innerHTML = `
+          alpha:${e.alpha.toFixed(0)}<br/>
+          beta:${e.beta.toFixed(0)}<br/>
+          gamma:${e.gamma.toFixed(0)}<br/>
+        `
+      })
+    }
+  </script>
+</body>
+
+</html>
