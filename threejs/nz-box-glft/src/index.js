@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-09-14 19:42:02
+ * @LastEditTime: 2022-09-21 13:42:40
  * @LastEditors: wangfengxiang
  */
 import loadSkin from './js/loadSkin.js'
@@ -41,18 +41,32 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
     scene.position.y = -50
 
 
-    
+
     // 牛仔盒子
     const gibLoader = new THREE.GLTFLoader()
     const dracoLoader = new THREE.DRACOLoader()
+
+    // 压缩版本
     dracoLoader.setDecoderPath('http://static.iqiyi.com/lequ/20220914/')  //使用js方式解压
     gibLoader.setDRACOLoader(dracoLoader)
 
-    gibLoader.load('http://static-d.iqiyi.com/lequ/20220914/afb21599ba8d41fb95a47a5e9f3c28b1.gltf', (a) => {
-        console.log('scence: ', a.scenes);
-        a.scenes[0].scale.set(50, 50, 50)
+    console.time('new-load')
+    gibLoader.load('http://static-d.iqiyi.com/lequ/20220921/bb0b461016aa4156bdad35b6d5bbf63e.glb', (a) => {
+        console.timeEnd('new-load')
+        window.parent.postMessage('加载好了','*')
+        a.scenes[0].scale.set(1500, 1500, 1500)
+        a.scenes[0].rotation.x = -Math.PI * 0.1
         scene.add(a.scenes[0])
     })
+
+    // 原始版本
+    // console.time('load')
+    // gibLoader.load('http://static-d.iqiyi.com/lequ/20220921/312c95c6c1244adc968d40709c823d2e.glb', (a) => {
+    //     console.timeEnd('load')
+    //     a.scenes[0].scale.set(1500, 1500, 1500)
+    //     a.scenes[0].rotation.x = -Math.PI * 0.1
+    //     scene.add(a.scenes[0])
+    // })
 
     // 初始舞者
     let mixer = null,
