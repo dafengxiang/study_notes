@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-02-24 18:25:14
- * @LastEditTime: 2022-09-21 13:42:40
+ * @LastEditTime: 2022-09-21 14:57:51
  * @LastEditors: wangfengxiang
  */
 import loadSkin from './js/loadSkin.js'
@@ -12,33 +12,33 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
 
 (async function init() {
     // 初始化数据控制器
-    const dg = new initDatGUI({
-        move: {
-            curVal: 2,
-            maxVal: 10,
-        },
-        speed: {
-            curVal: 0.008,
-            maxVal: 0.1,
-        },
-        x: {
-            curVal: 0,
-            maxVal: 1000,
-        },
-        y: {
-            curVal: 200,
-            maxVal: 1000,
-        },
-        z: {
-            curVal: 200,
-            maxVal: 1000,
-        }
-    })
-    dg.close()
-    let controls = dg.controls
+    // const dg = new initDatGUI({
+    //     move: {
+    //         curVal: 2,
+    //         maxVal: 10,
+    //     },
+    //     speed: {
+    //         curVal: 0.008,
+    //         maxVal: 0.1,
+    //     },
+    //     x: {
+    //         curVal: 0,
+    //         maxVal: 1000,
+    //     },
+    //     y: {
+    //         curVal: 200,
+    //         maxVal: 1000,
+    //     },
+    //     z: {
+    //         curVal: 200,
+    //         maxVal: 1000,
+    //     }
+    // })
+    // dg.close()
+    // let controls = dg.controls
     // 初始环境
     const { scene, camera, renderer, point } = initScene()
-    scene.position.y = -50
+    // scene.position.y = -50
 
 
 
@@ -50,13 +50,17 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
     dracoLoader.setDecoderPath('http://static.iqiyi.com/lequ/20220914/')  //使用js方式解压
     gibLoader.setDRACOLoader(dracoLoader)
 
-    console.time('new-load')
     gibLoader.load('http://static-d.iqiyi.com/lequ/20220921/bb0b461016aa4156bdad35b6d5bbf63e.glb', (a) => {
-        console.timeEnd('new-load')
-        window.parent.postMessage('加载好了','*')
-        a.scenes[0].scale.set(1500, 1500, 1500)
+        window.parent.postMessage('加载好了', '*')
+        a.scenes[0].scale.set(2000, 2000, 2000)
         a.scenes[0].rotation.x = -Math.PI * 0.1
         scene.add(a.scenes[0])
+
+        intervalRenderInstance.add(() => {
+            // a.scenes[0].rotation.y += controls.speed;
+            a.scenes[0].rotation.y += 0.004;
+            if (a.scenes[0].rotation.y / Math.PI > 2) a.scenes[0].rotation.y = 0
+        })
     })
 
     // 原始版本
@@ -76,7 +80,8 @@ import intervalAnimationFrame from './js/intervalAnimationFrame.js'
     const intervalRenderInstance = new intervalAnimationFrame(() => {
         const delta = clock.getDelta()
         mixer && mixer.update(delta)
-        point.position.set(controls.x, controls.y, controls.z); //点光源位置
+        // point.position.set(controls.x, controls.y, controls.z); //点光源位置
+        point.position.set(0, 0, 200); //点光源位置
         renderer.render(scene, camera);
     })
 })()

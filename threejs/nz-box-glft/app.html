@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: wangfengxiang
  * @Date: 2022-09-21 11:32:50
- * @LastEditTime: 2022-09-21 13:59:42
+ * @LastEditTime: 2022-09-21 15:12:16
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -12,28 +12,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>内嵌模型</title>
     <style>
-        *{
-            padding:0;
-            margin:0;
+        * {
+            padding: 0;
+            margin: 0;
         }
-        iframe {
-            width: 100vw;
-            height: 100vh;
+
+        #container {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top: calc(50vh - 150px);
+            left: calc(50vw - 150px);
         }
-        .mask{
-            background: url() no-repeat 0 0 contain;
+
+        #mask {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top: calc(50vh - 155px);
+            left: calc(50vw - 150px);
+            background: url(//pic3.iqiyipic.com/lequ/20220921/5edce46148114aee93faf250c409e833.jpg) no-repeat 0 0 / contain;
         }
     </style>
 </head>
 
 <body>
-    <iframe src="http://test.m.iqiyi.com:8098" id="container" frameborder="0" style="opacity:0"></iframe>
-    <div class="mask"></div>
+    <div id="mask"></div>
+    <iframe src="http://lequ.iqiyi.com/page/view?url=http://vip.iqiyi.com/threejs/bingmayong.html&pageId=16151" id="container" frameborder="0" style="opacity: 0;"></iframe>
     <script>
-        window.addEventListener('message', function ({data=''}) {
-            if(data==='加载好了') container.style ='opacity:1'
+        window.addEventListener('message', function ({ data = '' }) {
+            if (data === '加载好了') {
+                container.style = 'opacity: 1;';
+                mask.style = 'opacity: 0;'
+            }
         })
     </script>
 
