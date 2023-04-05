@@ -2,7 +2,7 @@
  * @Description: 不添加数组，为两个有序数组排序
  * @Author: wangfengxiang
  * @Date: 2023-04-05 15:44:57
- * @LastEditTime: 2023-04-05 16:09:25
+ * @LastEditTime: 2023-04-05 16:57:26
  * @LastEditors: wangfengxiang
  */
 const arr1 = [1, 3, 5, 45, 65],
@@ -44,5 +44,6 @@ function sort2(arr1, arr2) {
     return arr1
 }
 
+// 思路：获取两数组总长度减一为目标数组最大下标，取两数组最大数比较，值大的赋值给目标数组最大下标，最大下标递减，取值数组指针递减，直到非目标数组清空，时间复杂度O(n)
 
 console.log(sort2(arr1, arr2));
