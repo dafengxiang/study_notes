@@ -1,0 +1,10 @@
+{
+  "name": "TensorFlow",
+  "version": "1.0.0",
+  "description": "tensorflow.js学习",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.6.0"
+  }
+}
