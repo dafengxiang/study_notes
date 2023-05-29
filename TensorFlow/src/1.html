@@ -2,21 +2,33 @@
  * @Description: cdn引入脚本
  * @Author: wangfengxiang
  * @Date: 2023-05-29 21:22:53
- * @LastEditTime: 2023-05-29 21:33:19
+ * @LastEditTime: 2023-05-29 22:39:45
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cdn引入脚本</title>
 </head>
+
 <body>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.7.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@2.2.2"></script>
     <script>
-        console.log(tf.version.tfjs)
+        const threshold = 0.5
+        toxicity.load(threshold).then((model) => {
+            const sentences = ['123']
+            model.classify(sentences).then(
+                predictions => {
+                    console.log(predictions)
+                }
+            ).catch(err => console.log(11, err))
+        }).catch(e => console.log(222, e))
     </script>
 </body>
+
 </html>
