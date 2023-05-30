@@ -2,7 +2,7 @@
  * @Description: cdn引入脚本
  * @Author: wangfengxiang
  * @Date: 2023-05-29 21:22:53
- * @LastEditTime: 2023-05-29 22:39:45
+ * @LastEditTime: 2023-05-30 09:55:19
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
@@ -17,17 +17,104 @@
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.7.0/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@2.2.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@1.2.2"></script>
     <script>
         const threshold = 0.5
         toxicity.load(threshold).then((model) => {
-            const sentences = ['123']
+            const sentences = ['fuck']
             model.classify(sentences).then(
                 predictions => {
                     console.log(predictions)
                 }
             ).catch(err => console.log(11, err))
         }).catch(e => console.log(222, e))
+
+        // const results = [
+        //     {
+        //         "label": "identity_attack",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.952540397644043,
+        //                     "1": 0.04745963588356972
+        //                 },
+        //                 "match": false
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "label": "insult",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.29589617252349854,
+        //                     "1": 0.7041037678718567
+        //                 },
+        //                 "match": true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "label": "obscene",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.16521619260311127,
+        //                     "1": 0.8347837924957275
+        //                 },
+        //                 "match": true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "label": "severe_toxicity",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.9893181920051575,
+        //                     "1": 0.010681809857487679
+        //                 },
+        //                 "match": false
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "label": "sexual_explicit",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.4937126934528351,
+        //                     "1": 0.5062872767448425
+        //                 },
+        //                 "match": true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "label": "threat",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.8549574017524719,
+        //                     "1": 0.1450425386428833
+        //                 },
+        //                 "match": false
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "label": "toxicity",
+        //         "results": [
+        //             {
+        //                 "probabilities": {
+        //                     "0": 0.07820126414299011,
+        //                     "1": 0.9217987060546875
+        //                 },
+        //                 "match": true
+        //             }
+        //         ]
+        //     }
+        // ]
     </script>
 </body>
 
