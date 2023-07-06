@@ -1,7 +1,8 @@
 {
-  "name": "web",
+  "name": "@fx/components",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fx/api": "workspace:^1.0.1",
-    "@fx/components": "workspace:^0.0.1",
     "vue": "^3.2.47"
   },
   "devDependencies": {

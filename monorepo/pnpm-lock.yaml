@@ -14,11 +14,13 @@ importers:
   packages/web:
     specifiers:
       '@fx/api': workspace:^1.0.1
+      '@fx/components': workspace:^0.0.1
       '@vitejs/plugin-vue': ^4.1.0
       vite: ^4.3.9
       vue: ^3.2.47
     dependencies:
       '@fx/api': link:../../api
+      '@fx/components': link:../../components
       vue: 3.3.4
     devDependencies:
       '@vitejs/plugin-vue': 4.2.3_vite@4.3.9+vue@3.3.4

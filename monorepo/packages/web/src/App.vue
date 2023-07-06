@@ -1,11 +1,13 @@
-
 <script setup>
 import { getUser } from "@fx/api";
+import Button from "@fx/components"
 console.log('getUser: ', getUser);
 getUser().then((user) => console.log("user: ", user));
 </script>
 
-<template></template>
+<template>
+    <Button/>
+</template>
 
 <style scoped>
 .logo {
