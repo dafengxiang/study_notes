@@ -21,12 +21,12 @@ function suction1(arr, num) {
         if (sum > num) return
         for (let i = index; i < arr.length; i++) {
             tmpArray.push(arr[i])
-            
-            def(i+1,sum + arr[i],tmpArray)
+
+            def(i + 1, sum + arr[i], tmpArray)
             // tmpArray.pop()
         }
     }
-    def(0,0,[])
+    def(0, 0, [])
     return res
 }
 console.log(suction1(arr, 17));
